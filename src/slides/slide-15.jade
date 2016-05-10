@@ -1,0 +1,27 @@
+section
+  section
+    h3 Referencing Parent Selectors: &
+    pre
+      code(data-trim).
+        .foo {
+          font-weight: bold;
+          &:hover { 
+            text-decoration: underline;
+          }
+          .in-home & {
+            font-weight: normal; 
+          }
+        }
+  section
+    h2 Compiled to:
+    pre
+      code(data-trim).
+        .foo {
+          font-weight: bold;
+        }
+        .foo:hover { 
+          text-decoration: underline;
+        }          
+        .in-home .foo {
+          font-weight: normal; 
+        }

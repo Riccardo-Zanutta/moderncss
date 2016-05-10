@@ -1,0 +1,18 @@
+section
+  section
+    h3 Are these systems so different?
+    p They actually play together very nicely, especially when you throw Sass into the mix.
+  section
+    h3 Why don't SMACSS + BEM-OOCSS?
+    ul
+      li style.scss 
+      | #Core file: imports the others.
+      li _base.scss #
+      | Includes normalize.css, and also sets styles on base elements: html, body, a, ul, li, etc.
+  section
+    ul
+      li _layout.scss #
+      li _modules.scss #
+      | Includes definitions for our modules, or objects.
+      li _other.scss #
+      | All the code that doesn't fit in _base, _layout, or _modules. Code we just couldn't make modular; glue between modules; top level layouts; etc.

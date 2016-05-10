@@ -1,0 +1,12 @@
+section
+  p The order of selectors in your CSS does play a role and the "further down" one does win when the specificity values are exactly the same.
+  pre
+    code(data-trim).
+      .favorite {
+         color: red;
+      }
+
+      .favorite {
+         color: black;
+      }
+  p.fragment.fade-in The color will be black.

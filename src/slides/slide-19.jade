@@ -1,0 +1,49 @@
+section
+  section
+    h2 Conditionals, loops
+    .row
+      .half
+        pre
+          code(data-trim).
+            .foo {
+              @if 1 + 1 == 2 { 
+                border: 1px solid;
+              }
+              @if 5 < 3 {
+                border: 2px dotted;
+              }
+              @if null {
+                border: 3px double;
+              }
+            }
+      .half
+        pre
+          code(data-trim).
+            @for $i from 1 through 3 {
+              .item-#{$i} { 
+                width: 2em * $i;
+              }
+            }
+  section
+    h2 Compiled to:
+    .row
+      .half
+        pre
+          code(data-trim).
+            p {
+              border: 1px solid;
+            }
+      .half
+        pre
+          code(data-trim).
+            .item-1 {
+              width: 2em; 
+            }
+            .item-2 {
+              width: 4em; 
+            }
+            .item-3 {
+              width: 6em; 
+            }
+
+

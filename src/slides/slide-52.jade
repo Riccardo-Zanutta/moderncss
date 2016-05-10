@@ -1,0 +1,88 @@
+section
+  section
+    h2 Placeholder selectors
+    pre
+      code.
+        %font-stack--body {
+          font-family: 'Helvetica Neue','Helvetica', sans-serif;
+        }
+
+        %font-stack--headers {
+          @extend %font-stack--body;
+          font-weight: 600;
+        }
+
+        %type--base-body {
+          @extend %font-stack--body;
+        }
+
+        %type--base-h2 {
+          @extend %font-stack--headers;
+          font-size: 1.5em;
+        }
+  section
+    p And now to the molecule! This is where it gets really delicious:
+    pre
+      code.
+        .metadata {
+          &__pin-type {
+            @extend %type--base-h2; //extend base header styling
+          }
+
+          &__caption {
+            @extend %type--base-body; //extending normal body copy
+          }
+
+          &__hearts {
+
+            &:hover {
+              color: red; //unique hover color
+            }
+
+            &:after {
+              @extend %icon--heart; // extending heart icon on pseudo element
+            }
+          }
+
+          &__pins {
+
+            &:hover {
+              color: green; //unique hover color
+            }
+
+            &:after {
+              @extend %icon--pins; // extending pins icon on pseudo element
+            }
+          }
+        }
+  section
+    h4 Compiled to:
+    pre
+      code.
+        .metadata__pins:after, .metadata__hearts:after {
+          content: ';
+          display: block;
+        }
+        .metadata__pins:after {
+          background-image: url('../img/pins.svg');
+        }
+        .metadata__hearts:after {
+          background-image: url('../img/heart.svg');
+        }
+        .metadata__pin-type, .metadata__caption {
+          font-family: 'Helvetica Neue','Helvetica', sans-serif;
+        }
+        .metadata__pin-type {
+          font-weight: 600;
+        }
+        .metadata__pin-type {
+          font-size: 1.5em;
+        }
+        .metadata__hearts:hover {
+          color: red;
+        }
+        .metadata__pins:hover {
+          color: green;
+        }
+
+
