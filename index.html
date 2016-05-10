@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="some description about the slides">
+    <meta name="author" content="You">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+  </head>
+  <body>
+    <div class="reveal-frame"></div>
+    <div class="reveal">
+      <div class="slides">
+        <section><img src="img/logo.svg" alt="webisart logo" class="initial-logo logo">
+          <h1>Modern CSS</h1>
+          <p>How to write scalable, modular CSS</p>
+          <p class="small"><a href="https://twitter.com/RiccardoZanutta" target="_blank" class="link">Riccardo Zanutta</a></p>
+        </section>
+        <section data-background-transition="zoom">
+          <h3>Me.json</h3>
+          <pre><code data-trim>{
+  "name": "Riccardo",
+  "surname": "Zanutta",
+  "interests": [
+    "Web", "Technology", "Sports"
+  ],
+  "work": [
+    "@frontend-developer", "@ideonetwork"
+  ],
+  "tech": [
+    "HTML", "CSS", "JavaScript", "React.js"
+  ]
+}</code></pre>
+        </section>
+        <section>
+          <h2>History</h2>
+          <p><strong>Cascading Style Sheets</strong> (CSS) is a style sheet language used for describing the presentation of a document written in a markup language.</p>
+          <p class="fragment fade-in">CSS level 1 was released in 1996, and republished with corrections in 1999.</p>
+        </section>
+        <section>
+          <h2>CSS is hard.</h2>
+          <p>CSS is code as much as JavaScript, PHP or anything else, and we should pay attention to the way we write it.</p>
+          <p class="fragment fade-in">Otherwise, it may cause things to be more complicated than they should be.</p>
+        </section>
+        <section>
+          <h2>Problems:</h2>
+          <ul>
+            <li>The specificity thing</li>
+            <li class="fragment fade-in">Redundancy</li>
+            <li class="fragment fade-in">maintenance</li>
+          </ul>
+        </section>
+        <section><img src="img/CSS.gif" alt=""></section>
+        <section>
+          <h2>Principles: </h2>
+          <ul>
+            <li class="fragment fade-in">be DRY</li>
+            <li class="fragment fade-in">be Mantainable: write for updates & debugging</li>
+            <li class="fragment fade-in">be Predictable: Don't keep hacking what's broken (unless you have to)</li>
+            <li class="fragment fade-in">Write Scalable code</li>
+            <li class="fragment fade-in">Write Modular code</li>
+          </ul>
+        </section>
+        <section>
+          <h2>CSS Preprocessors</h2>
+          <p>A scripting language that extends the language and gets compiled into regular CSS.</p>
+        </section>
+        <section>
+          <h2>Most used</h2>
+          <ul>
+            <li class="fragment fade-in">SASS</li>
+            <li class="fragment fade-in">LESS</li>
+            <li class="fragment fade-in">Stylus</li>
+          </ul>
+        </section>
+        <section>
+          <h2> <a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html">SASS</a></h2>
+          <ul>
+            <li>Variables</li>
+            <li class="fragment fade-in">Nesting</li>
+            <li class="fragment fade-in">Referencing parents Selectors: &</li>
+            <li class="fragment fade-in">Mixins</li>
+            <li class="fragment fade-in">Partials</li>
+            <li class="fragment fade-in">Extend / Inheritance</li>
+            <li class="fragment fade-in">Operators</li>
+            <li class="fragment fade-in">Conditionals, loops</li>
+          </ul>
+        </section>
+        <section>
+          <section>
+            <h3>Syntax</h3>
+            <div class="row">
+              <div class="half">
+                <p>.sass</p>
+                <pre><code data-trim>.foo
+  color: black
+// indentation</code></pre>
+              </div>
+              <div class="half">
+                <p>.scss</p>
+                <pre><code data-trim>.foo {
+  color: black;
+}</code></pre>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2>Compiled to:</h2>
+            <pre><code data-trim>.foo {
+  color: black;
+}</code></pre>
+          </section>
+        </section>
+        <section>
+          <h2>Compile Sass:</h2>
+          <ul>
+            <li class="fragment fade-in">The original Ruby Sass binary. Install it with gem install sass, and compile it by running sassc myfile.scss myfile.css.</li>
+            <li class="fragment fade-in">A GUI app such as Prepros, Koala, CodeKit</li>
+            <li class="fragment fade-in">libsass, a blazing fast Sass compiler written in C. You can also install libsass via NPM with node-sass (npm install node-sass).</li>
+          </ul>
+        </section>
+        <section>
+          <section>
+            <h2>Variables</h2>
+            <pre><code data-trim>$font-stack: Helvetica, sans-serif;
+$primary-color: #333;
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+}</code></pre>
+          </section>
+          <section>
+            <h2>Compiled to:</h2>
+            <pre><code data-trim>body {
+  font: 100% Helvetica, sans-serif;
+  color: #333;
+}</code></pre>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Nesting</h2>
+            <p class="small"><strong>!important!  </strong>Overly nested rules will result in over-qualified CSS that could prove hard to maintain and is generally considered bad practice.</p>
+            <pre><code data-trim>.foo {
+  .bar {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .baz {
+    display: block;
+    padding: 6px 12px;
+    text-decoration: none;
+  }
+}</code></pre>
+          </section>
+          <section>
+            <h2>Compiled to:</h2>
+            <pre><code data-trim>.foo .bar {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.foo .baz {
+  display: block;
+  padding: 6px 12px;
+  text-decoration: none;
+}</code></pre>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h3>Referencing Parent Selectors: &</h3>
+            <pre><code data-trim>.foo {
+  font-weight: bold;
+  &:hover { 
+    text-decoration: underline;
+  }
+  .in-home & {
+    font-weight: normal; 
+  }
+}</code></pre>
+          </section>
+          <section>
+            <h2>Compiled to:</h2>
+            <pre><code data-trim>.foo {
+  font-weight: bold;
+}
+.foo:hover { 
+  text-decoration: underline;
+}          
+.in-home .foo {
+  font-weight: normal; 
+}</code></pre>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Modularize: Partials</h2>
+            <div class="row">
+              <div class="half">
+                <pre><code data-trim>/* partial.scss */
+.foo {
+  width: 100%;
+}</code></pre>
+              </div>
+              <div class="half">
+                <pre><code data-trim>/* app.scss */
+@import "partial";
+
+.bar {
+  background: white;
+}</code></pre>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2>Compiled to:</h2>
+            <pre><code data-trim>.foo {
+  width: 100%;
+}
+.bar {
+  background: white;
+}</code></pre>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Mixins</h2>
+            <pre><code data-trim>@mixin square($size, $color) {
+  width: $size;
+  height: $size;
+  background-color: $color;
+}
+
+.small-blue-square {
+  @include square(20px, blue);
+}
+
+.big-red-square {
+  @include square(300px, red);
+}</code></pre>
+          </section>
+          <section>
+            <h2>Compiled to:</h2>
+            <pre><code data-trim>.small-blue-square {
+  width: 20px;
+  height: 20px;
+  background-color: blue; 
+}
+
+.big-red-square {
+  width: 300px;
+  height: 300px;
+  background-color: red;
+}</code></pre>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Extend/Inheritance</h2>
+            <pre><code data-trim>.message {
+  border: 1px solid #ccc;
+  padding: 10px;
+  color: #333;
+}
+
+.success {
+  @extend .message;
+  border-color: green;
+}
+
+.error {
+  @extend .message;
+  border-color: red;
+}
+
+.warning {
+  @extend .message;
+  border-color: yellow;
+}</code></pre>
+          </section>
+          <section>
+            <h2>Compiled to:</h2>
+            <pre><code data-trim>.message, .success, .error, .warning {
+  border: 1px solid #cccccc;
+  padding: 10px;
+  color: #333;
+}
+
+.success {
+  border-color: green;
+}
+
+.error {
+  border-color: red;
+}
+
+.warning {
+  border-color: yellow;
+}</code></pre>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Conditionals, loops</h2>
+            <div class="row">
+              <div class="half">
+                <pre><code data-trim>.foo {
+  @if 1 + 1 == 2 { 
+    border: 1px solid;
+  }
+  @if 5 < 3 {
+    border: 2px dotted;
+  }
+  @if null {
+    border: 3px double;
+  }
+}</code></pre>
+              </div>
+              <div class="half">
+                <pre><code data-trim>@for $i from 1 through 3 {
+  .item- { 
+    width: 2em * $i;
+  }
+}</code></pre>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2>Compiled to:</h2>
+            <div class="row">
+              <div class="half">
+                <pre><code data-trim>p {
+  border: 1px solid;
+}</code></pre>
+              </div>
+              <div class="half">
+                <pre><code data-trim>.item-1 {
+  width: 2em; 
+}
+.item-2 {
+  width: 4em; 
+}
+.item-3 {
+  width: 6em; 
+}</code></pre>
+              </div>
+            </div>
+          </section>
+        </section>
+        <section>
+          <h2>LESS</h2>
+          <ul>
+            <li>LESS is written in javascript, so you will need NodeJS to run it.</li>
+            <li>Variables: <code>@nice-blue: #5B83AD;</code></li>
+            <li>Extend with <code>:extend();</code></li>
+            <li>Mixins:
+              <pre><code data-trim>.a, #b {
+  color: red;
+}
+.mixin-class {
+  .a();
+}</code></pre>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <h2>Stylus</h2>
+          <p>Stylus is a CSS preprocessor written in Node.js.</p>
+          <ul>
+            <li>Variables: <code class="small">text-font-stack = 'Helvetica', 'Arial', sans-serif;</code></li>
+            <li>Mixins:
+              <pre><code>size(width, height = width)
+  width width
+  height height
+.foo
+  size(100px)</code></pre>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <h2>Summary</h2>
+          <ul> 
+            <li>SASS has better community support</li>
+            <li>Many Features vs. LESS</li>
+            <li>.scss syntax is the same as regular CSS, but with superpowers</li>
+          </ul>
+          <p><a href="https://csspre.com/compare/" target="_blank" class="link">https://csspre.com/compare/</a></p>
+        </section>
+        <section>
+          <section>
+            <h2>(Dont' Repeat yourself)</h2>
+            <blockquote>"every piece of knowledge must have a single, unambiguous, authorative  representation within a system."</blockquote>
+          </section>
+          <section>
+            <h3>A lot of repetition</h3>
+            <pre><code>.u-margin-top { 
+  margin-top: 12px; 
+}
+.u-margin-right { 
+  margin-right: 12px; 
+}
+.u-margin-bottom { 
+  margin-bottom: 12px; 
+}
+.u-margin-left { 
+  margin-left: 12px; 
+}</code></pre>
+            <p class="fragment fade-in">Variables: why not?</p>
+          </section>
+          <section>
+            <pre><code>$unit: 12px;
+.u-margin-top { margin-top: $unit; }
+.u-margin-right { margin-right: $unit; }
+.u-margin-bottom { margin-bottom: $unit; }
+.u-margin-left { margin-left: $unit; }</code></pre>
+            <h4 style="margin-top: 32px;" class="fragment fade-in">Single Source of Truth</h4>
+            <blockquote style="font-size: 30px;" class="fragment fade-in">"[...] the practice of structuring information models and associated schemata that every data element is stored exactly only once".</blockquote>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>!confuse</h2>
+            <h5 class="fragment fade-in">Automation of repetition is fine.</h5>
+            <p class="fragment fade-in">If you can generate the same declaration 50 times without manually repeat it is DRY: you are generating repetition without actually repeating yourself.</p>
+          </section>
+          <section>
+            <h4>Don't DRY if it's repeated coincidentally.</h4>
+            <p>Repetition in compiled code is fine, just avoid duplication data in source.</p>
+          </section>
+        </section>
+        <section>
+          <h2>Scalable + Modular = SMACSS</h2><img src="img/jack-head.png" alt="" style="box-shadow: none;">
+        </section>
+        <section>
+          <h4>Scalable and Modular Architecture for CSS</h4>
+          <p>It is more a style guide than rigid framework: is an attempt to document a consistent approach to site development when using CSS.</p>
+        </section>
+        <section>
+          <section>
+            <h3>Five categories:</h3>
+            <ul>
+              <li class="fragment fade-in"><strong>Base</strong> is used for defaults like html, body, a, a:hover. This includes your CSS resets and would often be in its own base CSS file or at the start of your main CSS.</li>
+              <li class="fragment fade-in"><strong>Layout</strong> divides a page into sections with elements like header, footer, and article. Often developers show layout elements by prefixing the class with l-.</li>
+            </ul>
+          </section>
+          <section>
+            <ul>
+              <li><strong>Module</strong> is a reusable, modular element in the design. The SMACSS documentation sees modules as the majority of your elements and thus doesn’t require that you prefix them but you could do so if you choose.</li>
+              <li class="fragment fade-in"><strong>State</strong> is used for the variations possible for each element (e.g. active, inactive, expanded, hidden). These are prefixed with is-, e.g. is-active, is-inactive, is-expanded, is-hidden or are via pseudo-classes such as :hover and :focus or media queries.</li>
+            </ul>
+          </section>
+          <section>
+            <ul>
+              <li><strong>Theme</strong> is similar to state but defines how modules and layouts will look. It is more applicable for larger sites with shared elements that look different throughout. You would add theme variations on a per page or per section basis.</li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <h2>Do What you want!</h2>
+          <p>SMACSS just provides basic guidelines. Use your own naming conventions for each of the categories and arrange them in your preferred way, as long as you document your approach so that other developers can follow along.</p>
+        </section>
+        <section>
+          <h2>Why SMACSS?</h2>
+          <ul>
+            <li class="fragment fade-in">Good for newcomers to a CSS methodology</li>
+            <li class="fragment fade-in">Ease of reading</li>
+            <li class="fragment fade-in">Scalable for all projects</li>
+          </ul>
+        </section>
+        <section>
+          <h4>The specificity problem, naming conventions and writing methodologies.</h4>
+          <div class="row">
+            <div class="half">
+              <pre><code data-trim><ul class="summer-drinks">
+   <li class="favorite">Whiskey and Ginger Ale</li>
+   <li>Beer</li>
+   <li>Vodka</li>
+</ul></code></pre>
+            </div>
+            <div class="half">
+              <pre><code data-trim>.favorite {
+  color: red;
+  font-weight: bold;
+}</code></pre>
+            </div>
+          </div>
+          <div class="row">
+            <h4 style="margin-top: 30px;" class="fragment fade-in">Doesn't work.</h4>
+          </div>
+        </section>
+        <section><img src="img/cry.gif" alt="">
+          <h3 class="fragment fade-in">Try not to cry. Cry a lot.</h3>
+        </section>
+        <section>
+          <h2>Later you'll find:</h2>
+          <pre><code data-trim>ul#summer-drinks li {
+  font-weight: normal;
+  font-size: 12px;
+  color: black;
+}</code></pre>
+        </section>
+        <section>
+          <p>The order of selectors in your CSS does play a role and the "further down" one does win when the specificity values are exactly the same.</p>
+          <pre><code data-trim>.favorite {
+   color: red;
+}
+
+.favorite {
+   color: black;
+}</code></pre>
+          <p class="fragment fade-in">The color will be black.</p>
+        </section>
+        <section>
+          <section>
+            <h3>Possible solutions:</h3>
+            <div class="row">
+              <div class="half">
+                <pre><code data-trim>ul#summer-drinks li.favorite {
+  color: red;
+  font-weight: bold;
+}</code></pre>
+              </div>
+              <div class="half">
+                <pre><code data-trim>html body div#pagewrap ul#summer-drinks li.favorite {
+  color: red;
+  font-weight: bold;
+}</code></pre>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h3>The Jedi mind trick for CSS.</h3>
+            <pre><code data-trim>.favorite {
+  color: red !important;
+  font-weight: bold !important;
+}</code></pre>
+          </section>
+        </section>
+        <section>
+          <h2 class="fragment fade-in">Please. Don't do that.</h2><img src="img/ops.gif" alt="">
+        </section>
+        <section>
+          <p>CSS applies vastly different specificity weights to classes and IDs. In fact, an ID has infinitely more specificity value!</p><img src="img/specific-table.png" alt="" class="fragment fade-in">
+        </section>
+        <section>
+          <section><img src="img/partial-calc-1.png" alt=""></section>
+          <section><img src="img/calc-1.png" alt=""></section>
+        </section>
+        <section>
+          <section><img src="img/partial-calc-2.png" alt=""></section>
+          <section><img src="img/calc-2.png" alt=""></section>
+        </section>
+        <section>
+          <ul>
+            <li>The universal selector (*) has no specificity value (0,0,0,0)</li>
+            <li class="fragment fade-in">Pseudo-elements (e.g. :first-line) get 0,0,0,1 unlike their psuedo-class brethren which get 0,0,1,0</li>
+            <li class="fragment fade-in">The !important value appended a CSS property value is an automatic win. It overrides even inline styles from the markup. </li>
+          </ul><strong style="display: block; margin-top: 35px;" class="fragment fade-in">Just because nesting is nice, it doesn't mean specificity has to go up</strong>
+        </section>
+        <section>
+          <h3 style="margin-bottom: 30px;">Naming conventions.</h3>
+          <blockquote>"There are only two hard things in Computer Science: cache invalidation and naming things." -- Phil Karlton</blockquote>
+          <p>BEM, OOCSS, ACSS</p>
+        </section>
+        <section>
+          <h3>Usually:</h3>
+          <pre><code data-trim><!-- Functional class names -->
+<div class="is-relative is-responsive"></div>
+<!-- Content-based class names -->
+<div class="registered-user-avatar"></div>
+<!-- Presentational class names -->
+<div class="round-box"></div></code></pre>
+        </section>
+        <section>
+          <section>
+            <h2>BEM: What?</h2>
+            <p>BEM stands for Block Element Modifier and originated at Yandex. It provides a rather strict way to arrange your CSS classes into independent modules.</p>
+          </section>
+          <section>
+            <ul>
+              <li>A Block represents an object in your website. For example:</li>
+              <li class="fragment fade-in">An Element is a component within the block that performs a particular function. It should only make sense in the context of its block</li>
+              <li class="fragment fade-in">A Modifier is how we represent the variations of a block</li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <h2>BEM syntax</h2>
+          <pre><code data-trim>.block {}
+.block__element {}
+.block--modifier {}
+.block__element--modifier {}</code></pre>
+        </section>
+        <section>
+          <h4>Example</h4><img src="img/pinterest-card.jpg" alt="">
+        </section>
+        <section>
+          <pre style="margin-top: 110px;"><code data-trim><div class="card">
+  <img class="card__source-icon">
+  <a href="" class="card__source-link"></a>
+
+  <section class="card__metadata">
+    <h2 class="metadata__pin-type"></h2>
+    <hr>
+    <p class="metadata__caption"></p>
+    <span class="metadata__pins"></span>
+    <span class="metadata__hearts"></span>
+  </section>
+
+  <hr>
+
+  <section class="card__callout">
+    <img src="" alt="" class="callout__board-preview">
+    <p class="callout__msg"></p>
+    <a href="" class="callout__board-title"></a>
+  </section>
+</div></code></pre>
+        </section>
+        <section>
+          <h2>Pros:</h2>
+          <ul>
+            <li>It is applicable to all projects, big and small</li>
+            <li>It avoids nesting</li>
+            <li>It helps you rediscover the power of classes</li>
+          </ul>
+        </section>
+        <section>
+          <h2>OOCSS</h2>
+          <p>OOCSS is a programming paradigm. OOCSS stands for Object Oriented CSS. </p>
+          <ul>
+            <li>CSS object identification</li>
+            <li>separation of structure and visual styles</li>
+            <li>single responsibility principle</li>
+          </ul>
+        </section>
+        <section>
+          <h2>So, an object, right?</h2>
+          <blockquote style="font-size: 30px;">"Basically, a CSS "object" is a repeating visual pattern, that can be abstracted into an independent snippet of HTML, CSS, and possibly JavaScript. That object can then be reused throughout a site. – Nicole Sullivan, Github (OOCSS)"</blockquote>
+        </section>
+        <section>
+          <h4>Example</h4><img src="img/pinterest-card.jpg" alt="">
+        </section>
+        <section style="margin-top: 150px;">
+          <h2>OOCSS Pinterest card.</h2>
+          <pre><code data-trim><section class="card__metadata">
+  <h2 class="metadata__pin-type"></h2>
+  <hr>
+  <p class="metadata__caption"></p>
+  <span class="metadata__pins"></span>
+  <span class="metadata__hearts"></span>
+</section></code></pre>
+        </section>
+        <section>
+          <section>
+            <h3>Icons?</h3>
+            <pre><code>%icon {
+  content: '';
+  display: block;
+
+  &--pins {
+    @extend %icon;
+    background-image: url('../img/pins.svg');
+  }
+
+  &--heart {
+    @extend %icon;
+    background-image: url('../img/heart.svg');
+  }
+}</code></pre>
+          </section>
+          <section>
+            <ul>
+              <li>We're creating an invisible selector, in Sass.</li>
+              <li>none of this code is processed into CSS until we @extend it</li>
+              <li>we specify the background-image for each individual icon while *extending* the styled from its parent block</li>
+            </ul>
+          </section>
+          <section>
+            <h4>Behind the scenes:</h4>
+            <pre><code>%icon, %icon--pins, %icon--heart {
+  content: '';
+  display: block;
+}
+
+%icon--pins {
+  background-image: url('../img/pins.svg');
+}
+
+%icon--heart {
+  background-image: url('../img/heart.svg');
+}</code></pre>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Placeholder selectors</h2>
+            <pre><code>%font-stack--body {
+  font-family: 'Helvetica Neue','Helvetica', sans-serif;
+}
+
+%font-stack--headers {
+  @extend %font-stack--body;
+  font-weight: 600;
+}
+
+%type--base-body {
+  @extend %font-stack--body;
+}
+
+%type--base-h2 {
+  @extend %font-stack--headers;
+  font-size: 1.5em;
+}</code></pre>
+          </section>
+          <section>
+            <p>And now to the molecule! This is where it gets really delicious:</p>
+            <pre><code>.metadata {
+  &__pin-type {
+    @extend %type--base-h2; //extend base header styling
+  }
+
+  &__caption {
+    @extend %type--base-body; //extending normal body copy
+  }
+
+  &__hearts {
+
+    &:hover {
+      color: red; //unique hover color
+    }
+
+    &:after {
+      @extend %icon--heart; // extending heart icon on pseudo element
+    }
+  }
+
+  &__pins {
+
+    &:hover {
+      color: green; //unique hover color
+    }
+
+    &:after {
+      @extend %icon--pins; // extending pins icon on pseudo element
+    }
+  }
+}</code></pre>
+          </section>
+          <section>
+            <h4>Compiled to:</h4>
+            <pre><code>.metadata__pins:after, .metadata__hearts:after {
+  content: ';
+  display: block;
+}
+.metadata__pins:after {
+  background-image: url('../img/pins.svg');
+}
+.metadata__hearts:after {
+  background-image: url('../img/heart.svg');
+}
+.metadata__pin-type, .metadata__caption {
+  font-family: 'Helvetica Neue','Helvetica', sans-serif;
+}
+.metadata__pin-type {
+  font-weight: 600;
+}
+.metadata__pin-type {
+  font-size: 1.5em;
+}
+.metadata__hearts:hover {
+  color: red;
+}
+.metadata__pins:hover {
+  color: green;
+}</code></pre>
+          </section>
+        </section>
+        <section>
+          <h2>Pros:</h2>
+          <ul>
+            <li>Reusable visual styling codes</li>
+            <li class="fragment fade-in">location flexible codes</li>
+            <li class="fragment fade-in">reduction in deep nested selectors.</li>
+          </ul>
+        </section>
+        <section>
+          <h2>ACSS (Atomic CSS)</h2>
+          <p>Atomic Design is a systems-thinking methodology solidified by Brad Frost</p>
+          <p>Create individual molecules or elements which, when combined and placed together, weave a web of modules, components, and eventually entire layout systems.</p>
+        </section>
+        <section>
+          <h3>Five components:</h3>
+          <ul>
+            <li>atoms</li>
+            <li class="fragment fade-in">molecules</li>
+            <li class="fragment fade-in">organisms</li>
+            <li class="fragment fade-in">templates</li>
+            <li class="fragment fade-in">pages</li>
+          </ul>
+        </section>
+        <section>
+          <h4>Example</h4><img src="img/pinterest-card.jpg" alt="">
+        </section>
+        <section>
+          <section>
+            <ul>
+              <li>caption text</li>
+              <li class="fragment fade-in">header text (pin type)</li>
+              <li class="fragment fade-in">body text (caption)</li>
+              <li class="fragment fade-in">callout text (message)</li>
+              <li class="fragment fade-in">callout text (title)</li>
+              <li class="fragment fade-in">callout image (mini board)</li>
+              <li class="fragment fade-in">source icons</li>
+              <li class="fragment fade-in">local icons</li>
+              <li class="fragment fade-in">numeric treatment</li>
+              <li class="fragment fade-in">main image</li>
+              <li class="fragment fade-in">dividers</li>
+              <li class="fragment fade-in">These are then pulled together in sets of molecules:</li>
+            </ul>
+          </section>
+          <section>
+            <ul>
+              <li>Image & Citation (main image + source icon + caption text)</li>
+              <li class="fragment fade-in">Pin Metadata (pin type text + hr + body text + [local icon + numeric treatment] x2)</li>
+              <li class="fragment fade-in">Callout (callout image + callout text (message) + callout text (title))</li>
+              <li class="fragment fade-in">Those molecules then comprise an organism aka the card itself:</li>
+              <li class="fragment fade-in">(Image & Citation) + (Pin Metadata) + divider + (Callout)</li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <h4>Organism</h4><img src="img/pinterest-system.jpg" alt="">
+        </section>
+        <section>
+          <h2>Summary</h2>
+          <p>A good naming convention will tell you and your team:</p>
+          <ul>
+            <li>what an entity class represents;</li>
+            <li>where a class can be used;</li>
+            <li>what (else) a class might be related to.</li>
+          </ul>
+        </section>
+        <section>
+          <section>
+            <h3>Are these systems so different?</h3>
+            <p>They actually play together very nicely, especially when you throw Sass into the mix.</p>
+          </section>
+          <section>
+            <h3>Why don't SMACSS + BEM-OOCSS?</h3>
+            <ul>
+              <li>style.scss </li>#Core file: imports the others.
+              <li>_base.scss #</li>Includes normalize.css, and also sets styles on base elements: html, body, a, ul, li, etc.
+            </ul>
+          </section>
+          <section>
+            <ul>
+              <li>_layout.scss #</li>
+              <li>_modules.scss #</li>Includes definitions for our modules, or objects.
+              <li>_other.scss #</li>All the code that doesn't fit in _base, _layout, or _modules. Code we just couldn't make modular; glue between modules; top level layouts; etc.
+            </ul>
+          </section>
+        </section>
+        <section>
+          <h3>Taking a step further: PostCSS</h3>
+          <p>PostCSS is not a preprocessor per se; it doesn’t transform CSS. It provides a CSS parser and a framework for creating plugins that can analyse, lint, handle assets, optimise, create fallbacks, and otherwise transform parsed CSS.</p>
+        </section>
+        <section><img src="img/postcss.svg" alt="" style="box-shadow: none;">
+          <p>PostCSS is agnostic to language format and allows for the syntax style of different preprocessors, like Sass and LESS, if needed.</p>
+          <p>"Wait! A CSS file?" Yup, a CSS file.</p>
+        </section>
+        <section>
+          <section>
+            <p>Ever wanted to learn Russian but were too busy writing CSS?</p>
+            <pre><code>h1 {
+  размер-шрифта: 20пикселей;
+  цвет: красный;
+  цвет-фона: белый;
+  вес-шрифта: жирный;
+}</code></pre>
+          </section>
+          <section>
+            <h2>Which compiles to:</h2>
+            <pre><code>h1 {
+  font-size: 20px;
+  color: red;
+  background-color: white;
+  font-weight: bold;
+}</code></pre>
+          </section>
+        </section>
+        <section>
+          <section> 
+            <p>Improve the quality of your css with PostCSS: useful plugins.</p>
+            <h5>Autoprefixer: dealing with browser vendor-prefixes.</h5>
+            <pre><code>a {
+  transition: transform 1s
+}</code></pre>
+          </section>
+          <section>
+            <h2>Compiled to:</h2>
+            <pre><code>a {
+  -webkit-transition: -webkit-transform 1s;
+  transition: -ms-transform 1s;
+  transition: transform 1s
+}</code></pre>
+          </section>
+        </section>
+        <section>
+          <h3>Stylelint</h3>
+          <p>Stylelint allows you to validate your CSS code against a predefined set of rules which can check your code for consistent formatting, usage of certain rules, units or directives, as well as potential mistakes (such as incorrect colors). </p>
+        </section>
+        <section>
+          <section> 
+            <h4>USING FUTURE SYNTAXES WITH CSSNEXT</h4>
+            <p>CSS4 will soon be upon us, and with it comes features such as native variables, custom media queries, custom selectors and new pseudo-links. While they are not yet supported in all browsers, they will be implemented in modern browsers as the specification gets approved</p>
+          </section>
+          <section>
+            <p>Over the next few years, the way we use CSS will change in many different ways. Every project will have different requirements, to which we will have to adapt our production methods. Working within a modular ecosystem like PostCSS allows us to pick and choose the features we want to complete a project.</p>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>!important</h1>
+            <ul>
+              <li>CSS is hard.</li>
+              <li>CSS is code as much as JavaScript, PHP or anything else, and we should pay attention to the way we write it.</li>
+              <li>Use a preprocessor to store key data in variables and unleash CSS superpowers!</li>
+              <li>Automate your workflow</li>
+              <li>Make use of mixins to generate repetition for you.</li>
+              <li>Don't over-nesting</li>
+            </ul>
+          </section>
+          <section>
+            <ul>
+              <li>Use clear, descriptive, semantic class names</li>
+              <li>Abstract design patterns into reusable objects</li>
+              <li>Do not DRY anything that is purely coincidental</li>
+              <li>Repetition is better than the wrong abstraction</li>
+              <li>CSS have many, many hidden power:
+                <ul>
+                  <li><a href="http://una.im/css-games/" class="link">http://una.im/css-games/</a></li>
+                  <li><a href="http://codepen.io/rickzanutta/full/doWzNE/" class="link">http://codepen.io/rickzanutta/full/doWzNE/ </a></li>
+                  <li><a href="https://davidwalsh.name/css-facts " class="link">https://davidwalsh.name/css-facts  </a></li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <h3>Bonus!</h3><img src="img/science.gif" alt="">
+        </section>
+        <section>
+          <section>
+            <h3>Useful links:</h3>
+            <ul>
+              <li> <a href="http://www.sassmeister.com/ " class="link">http://www.sassmeister.com/ </a></li>
+              <li> <a href="http://getbootstrap.com/ " class="link">http://getbootstrap.com/ </a></li>
+              <li> <a href="http://foundation.zurb.com/ " class="link">http://foundation.zurb.com/ </a></li>
+              <li> <a href="https://github.com/HugoGiraudel/sass-boilerplate " class="link">https://github.com/HugoGiraudel/sass-boilerplate </a></li>
+              <li> <a href="http://www.sitepoint.com/introducing-ccss-component-css/ " class="link">http://www.sitepoint.com/introducing-ccss-component-css/ </a></li>
+              <li> <a href="https://github.com/Riccardo-Zanutta/brick " class="link">https://github.com/Riccardo-Zanutta/brick </a></li>
+            </ul>
+          </section>
+          <section>
+            <ul>
+              <li> <a href="https://github.com/AllThingsSmitty/css-protips " class="link">https://github.com/AllThingsSmitty/css-protips </a></li>
+              <li> <a href="https://github.com/AllThingsSmitty/must-watch-css" class="link">https://github.com/AllThingsSmitty/must-watch-css</a></li>
+              <li> <a href="https://css-tricks.com/strategies-keeping-css-specificity-low/ " class="link">https://css-tricks.com/strategies-keeping-css-specificity-low/ </a></li>
+              <li> <a href="http://www.webdesignermag.co.uk/sass-v-less-v-stylus-the-pros-and-cons/ " class="link">http://www.webdesignermag.co.uk/sass-v-less-v-stylus-the-pros-and-cons/ </a></li>
+            </ul>
+          </section>
+        </section>
+        <section><img src="img/logo.svg" alt="webisart logo" class="initial-logo logo">
+          <h1>Thanks!</h1>
+          <p><a href="https://twitter.com/RiccardoZanutta" target="_blank" class="link">Twitter</a><a href="http://codepen.io/rickzanutta/" target="_blank" class="link">Codepen</a><a href="https://github.com/Riccardo-Zanutta" target="_blank" class="link">Github</a></p>
+          <p class="small"><a href="https://www.facebook.com/webisart.user.group/" class="link">https://www.facebook.com/webisart.user.group/</a></p>
+        </section>
+      </div>
+      <script src="js/vendor/head.min.js"></script>
+      <script src="js/vendor/reveal.min.js"></script>
+      <script src="js/main.js"></script>
+    </div>
+  </body>
+</html>
